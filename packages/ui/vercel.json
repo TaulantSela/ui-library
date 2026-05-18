@@ -1,6 +1,7 @@
 {
   "name": "ui-library-storybook",
-  "buildCommand": "cd packages/ui && npm run build-storybook",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build-storybook --workspace=packages/ui",
   "outputDirectory": "packages/ui/storybook-static",
   "framework": null,
   "ignoreCommand": "! git diff HEAD^ HEAD --name-only | grep -qE '^packages/ui/'"
