@@ -1,6 +1,6 @@
 {
   "name": "ui-library-app-one",
-  "buildCommand": "cd apps/app-one && next build",
+  "buildCommand": "cd apps/app-one && npm run build-storybook && next build",
   "outputDirectory": "apps/app-one/.next",
   "framework": "nextjs",
   "ignoreCommand": "! git diff HEAD^ HEAD --name-only | grep -qvE '^apps/app-two/'"

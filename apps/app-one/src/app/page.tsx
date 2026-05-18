@@ -30,6 +30,7 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   SettingsIcon,
+  BookOpenIcon,
 } from "lucide-react"
 
 const stats = [
@@ -69,6 +70,12 @@ export default function DashboardPage() {
           <Badge variant="secondary" className="ml-1">Beta</Badge>
         </div>
         <div className="flex items-center gap-2">
+          <a href="/storybook/index.html" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="sm">
+              <BookOpenIcon />
+              Storybook
+            </Button>
+          </a>
           <Button variant="ghost" size="icon" aria-label="Notifications">
             <BellIcon />
           </Button>

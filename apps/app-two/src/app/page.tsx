@@ -24,7 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@repo/ui"
-import { SparklesIcon, BellIcon, ShieldIcon, PaletteIcon, UserIcon, SaveIcon } from "lucide-react"
+import { SparklesIcon, BellIcon, ShieldIcon, PaletteIcon, UserIcon, SaveIcon, BookOpenIcon } from "lucide-react"
 
 function Section({
   icon,
@@ -100,6 +100,12 @@ export default function SettingsPage() {
           <Badge className="ml-1">Pro</Badge>
         </div>
         <div className="flex items-center gap-2">
+          <a href="/storybook/index.html" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="sm">
+              <BookOpenIcon />
+              Storybook
+            </Button>
+          </a>
           <Button variant="ghost" size="icon" aria-label="Notifications">
             <BellIcon />
           </Button>
