@@ -1,4 +1,5 @@
 {
+  "name": "ui-library-app-one",
   "buildCommand": "cd apps/app-one && next build",
   "outputDirectory": "apps/app-one/.next",
   "framework": "nextjs"
