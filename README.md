@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧩 UI Library
 
-## Getting Started
+A small monorepo experiment: one shared React component library, `@repo/ui`, used by two Next.js 16 apps that give the same components their own look purely through CSS variables. It tries out shadcn/ui on Base UI primitives, Tailwind CSS 4 theming, and Storybook 10 stories that double as browser tests.
 
-First, run the development server:
+**▶ [Acme Dashboard →](https://ui-library-app-one.vercel.app)** (blue) · **[Bloom Settings →](https://ui-library-app-two.vercel.app)** (violet) — the **Storybook** button in each header opens that app's Storybook.
+
+## What's inside
+
+| Path | What it is |
+|---|---|
+| `packages/ui` | `@repo/ui`: Button, Badge, Input, Textarea, Label, Checkbox, Switch, RadioGroup, Select, Dialog and Tooltip, plus `cn()`. shadcn's `base-nova` style on [Base UI](https://base-ui.com) primitives, variants with `class-variance-authority`, icons from `lucide-react`. Its own Storybook covers nine of them. |
+| `apps/app-one` | **Acme Dashboard**: stat cards, a recent-activity table, quick actions and a "Create project" dialog, with mock data. Blue/indigo palette, 0.625rem radius. |
+| `apps/app-two` | **Bloom Studio settings**: profile, appearance, notifications and privacy forms. Violet palette, 1.5rem radius. |
+
+## How it works
+
+1. `@repo/ui` is an npm workspace that exports TypeScript source (`src/index.ts`) and a base `globals.css`. Nothing is built or published: each app depends on `"@repo/ui": "*"` and compiles it through Next.js `transpilePackages`.
+2. Components only use semantic Tailwind classes (`bg-primary`, `border-input`, `rounded-lg`, …). Each app's `globals.css` defines the tokens behind them (`--primary`, `--radius`, …) in OKLCH and points Tailwind at the library with `@source`, so the same components pick up that app's palette and corner radius.
+3. Each app has its own Storybook that renders the library in its theme. The Vercel build runs `build-storybook` into `public/storybook`, so the Storybook ships with the site at `/storybook`.
+4. Stories have `play` functions, and `@storybook/addon-vitest` runs them as tests in headless Chromium via Playwright. The a11y addon reports issues without failing the run (`a11y.test: "todo"`).
+5. Three Vercel projects deploy from one repo (one `vercel.json` per workspace); an app skips its rebuild when a commit only touches the other app.
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev:app-one         # Acme Dashboard, http://localhost:3001
+npm run dev:app-two         # Bloom Settings, http://localhost:3002
+npm run storybook           # library Storybook, http://localhost:6006
+npm run storybook:app-one   # http://localhost:6007
+npm run storybook:app-two   # http://localhost:6008
+npm test                    # story tests in every workspace
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The tests run in a real browser, so install Chromium for Playwright once with `npx playwright install chromium`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Status
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A learning project, not a package: `@repo/ui` is private and only used inside this repo. The library's own Storybook deployment isn't public; the two app Storybooks are. `packages/ui` still has Storybook's starter examples in `src/stories/` and the create-next-app starter page.
