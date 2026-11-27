@@ -14,5 +14,16 @@
     "dev:app-one": "npm run dev --workspace=apps/app-one",
     "dev:app-two": "npm run dev --workspace=apps/app-two",
     "test": "npm run test --workspaces --if-present"
+  },
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "^10.15.0"
+    },
+    "eslint-plugin-import": {
+      "eslint": "^10.15.0"
+    },
+    "eslint-plugin-jsx-a11y": {
+      "eslint": "^10.15.0"
+    }
   }
 }
